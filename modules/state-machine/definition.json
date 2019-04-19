@@ -1,0 +1,47 @@
+{
+  "Comment": "Iterator configuration",
+  "StartAt": "ConfigureCount",
+  "States": {
+    "ConfigureCount": {
+      "Type": "Pass",
+      "Result": 233,
+      "ResultPath": "$.count",
+      "Next": "ConfigureIterator"
+    },
+    "ConfigureIterator": {
+      "Type": "Pass",
+      "Result": {
+        "index": 0,
+        "step": 1
+      },
+      "ResultPath": "$.iterator",
+      "Next": "Iterator"
+    },
+    "Iterator": {
+      "Type": "Task",
+      "Resource": "${lambda-iterator-arn}",
+      "ResultPath": "$.iterator",
+      "Next": "IterateItems"
+    },
+    "IterateItems": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.iterator.continue",
+          "BooleanEquals": true,
+          "Next": "CopyItem"
+        }
+      ],
+      "Default": "Done"
+    },
+    "CopyItem": {
+      "Type": "Task",
+      "Resource": "${lambda-worker-arn}",
+      "Next": "Iterator"
+    },
+    "Done": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
