@@ -9,12 +9,26 @@ resource "aws_glue_crawler" "source-data-crawler" {
   }
 }
 
+resource "aws_glue_crawler" "parquet-data-crawler" {
+  database_name = "${aws_glue_catalog_database.parquet-data-database.name}"
+  name          = "${var.owner}-nyc-taxi-parquet-crawler"
+  role          = "${aws_iam_role.glue-iam-role.arn}"
+
+  s3_target {
+    path = "s3://${var.owner}-nyc-taxi/parquet-data/yellow"
+  }
+}
+
 data "template_file" "s3-access-policy" {
   template = "${file("modules/glue/crawler/s3-access-policy.json")}"
 }
 
 resource "aws_glue_catalog_database" "source-data-database" {
   name = "${var.owner}-nyc-taxi-data-database"
+}
+
+resource "aws_glue_catalog_database" "parquet-data-database" {
+  name = "${var.owner}-nyc-taxi-parquet-database"
 }
 
 data "template_file" "role-policy" {
