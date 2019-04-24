@@ -1,8 +1,9 @@
 data "template_file" "definition" {
-  template = "${file("modules/state-machine/definition.json")}"
+  template = "${file("modules/state-machine/step-machine-definitions/definition.json")}"
   vars {
     lambda-iterator-arn = "${var.lambda-iterator-arn}"
     lambda-worker-arn = "${var.lambda-worker-arn}"
+    lambda-s3-structure-builder-arn = "${var.lambda-s3-structure-builder-arn}"
   }
 }
 

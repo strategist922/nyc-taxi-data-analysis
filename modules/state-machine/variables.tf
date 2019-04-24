@@ -9,3 +9,7 @@ variable "lambda-worker-arn" {
 variable "lambda-iterator-arn" {
   type = "string"
 }
+
+variable "lambda-s3-structure-builder-arn" {
+  type = "string"
+}
