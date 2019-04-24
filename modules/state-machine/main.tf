@@ -3,6 +3,7 @@ data "template_file" "definition" {
   vars {
     lambda-iterator-arn = "${var.lambda-iterator-arn}"
     lambda-worker-arn = "${var.lambda-worker-arn}"
+    lambda-s3-structure-builder-arn = "${var.lambda-s3-structure-builder-arn}"
   }
 }
 

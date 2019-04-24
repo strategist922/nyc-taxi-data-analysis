@@ -10,6 +10,12 @@ data "archive_file" "lambda-worker" {
   output_path   = "output/lambda-worker.zip"
 }
 
+data "archive_file" "lambda-s3-structure-builder" {
+  type          = "zip"
+  source_file   = "source/nyc-taxi-data-s3-structure-builder/lambda_function.py"
+  output_path   = "output/lambda-iterator-s3-structure-builder.zip"
+}
+
 data "template_file" "role-policy" {
   template = "${file("modules/lambda/role-policy.json")}"
 }
@@ -39,7 +45,21 @@ resource "aws_lambda_function" "lambda-worker" {
   timeout = "900"
   filename = "${data.archive_file.lambda-worker.output_path}"
   source_code_hash = "${data.archive_file.lambda-worker.output_base64sha256}"
-  role = "${aws_iam_role.lambda-worker-iam-role.arn}"
+  role = "${aws_iam_role.lambda-iam-role.arn}"
+  tags = {
+    owner = "${var.owner}"
+  }
+}
+
+resource "aws_lambda_function" "lambda-s3-structure-builder" {
+  function_name = "${var.owner}-nyc-taxi-data-s3-structure-builder"
+  handler = "lambda_function.lambda_handler"
+  description = "Creating S3 bucket structure"
+  runtime = "python3.7"
+  timeout = "100"
+  filename = "${data.archive_file.lambda-s3-structure-builder.output_path}"
+  source_code_hash = "${data.archive_file.lambda-s3-structure-builder.output_base64sha256}"
+  role = "${aws_iam_role.lambda-iam-role.arn}"
   tags = {
     owner = "${var.owner}"
   }
@@ -53,8 +73,8 @@ resource "aws_iam_role" "lambda-iterator-iam-role" {
   }
 }
 
-resource "aws_iam_role" "lambda-worker-iam-role" {
-  name = "${var.owner}-nyc-taxi-data-lambda-worker-role"
+resource "aws_iam_role" "lambda-iam-role" {
+  name = "${var.owner}-nyc-taxi-data-lambda"
   assume_role_policy = "${data.template_file.role-policy.rendered}"
   tags = {
     owner = "${var.owner}"
@@ -63,6 +83,6 @@ resource "aws_iam_role" "lambda-worker-iam-role" {
 
 resource "aws_iam_role_policy" "lambda-worker-iam-role-policy" {
   name = "${var.owner}-nyc-taxi-data-lambda-role-policy"
-  role = "${aws_iam_role.lambda-worker-iam-role.id}"
+  role = "${aws_iam_role.lambda-iam-role.id}"
   policy = "${data.template_file.s3-access-policy.rendered}"
 }

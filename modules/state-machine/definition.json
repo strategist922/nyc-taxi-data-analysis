@@ -15,6 +15,11 @@
         "step": 1
       },
       "ResultPath": "$.iterator",
+      "Next": "BucketStructureBuilder"
+    },
+    "BucketStructureBuilder": {
+      "Type": "Task",
+      "Resource": "${lambda-s3-structure-builder-arn}",
       "Next": "Iterator"
     },
     "Iterator": {
