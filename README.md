@@ -22,3 +22,9 @@ Processed data are partitioned by company, year, month and stored in the folowin
 
 Then data from S3 are crawled and transformed to Parquet format using AWS Glue Python script (runs around 1 hour). 
 Processed data is stored on S3 in parquet-data folder (size for yellow taxi trip data: 39.6 GB)
+
+# How to use?
+Run terraform apply specifying owner prefix that will be added before all generated aws rescources
+```
+$ terraform apply -var owner=nickname
+```
