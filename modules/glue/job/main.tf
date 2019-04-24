@@ -6,10 +6,17 @@ resource "aws_glue_job" "convert-to-parquet-job" {
   }
 }
 
+data "template_file" "s3-convert-to-parquet-script-template" {
+  template = "${file("modules/glue/job/glue-scripts/convert-to-parquet.py")}"
+  vars {
+    bucketName = "${var.owner}-nyc-taxi"
+  }
+}
+
 resource "aws_s3_bucket_object" "s3-convert-to-parquet-script" {
   bucket = "${var.owner}-nyc-taxi"
   key    = "glue-scripts/convert-to-parquet.py"
-  source = "modules/glue/job/glue-scripts/convert-to-parquet.py"
+  content = "${data.template_file.s3-convert-to-parquet-script-template.rendered}"
   etag = "${filemd5("modules/glue/job/glue-scripts/convert-to-parquet.py")}"
 }
 
