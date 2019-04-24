@@ -1,10 +1,10 @@
 import json
 import boto3
+import os
 
 s3 = boto3.client('s3')
-
 sourceBucket = "nyc-tlc"
-targetBucket = "rmitula-nyc-taxi"
+TARGET_BUCKET = os.environ['targetBucket']
 
 companies = ['fhv', 'green', 'yellow']
 years = range(2009, 2019)
@@ -17,7 +17,7 @@ def lambda_handler(event, context):
             for month in months:
                 print(f": {company}/{year}/{month}")
                 response = s3.put_object(
-                    Bucket = targetBucket,
+                    Bucket = TARGET_BUCKET,
                     Key = f"data/{company}/{year}/{month}/"
                 )
 

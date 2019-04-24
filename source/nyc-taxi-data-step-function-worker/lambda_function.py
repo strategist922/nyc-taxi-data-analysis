@@ -2,11 +2,11 @@ import json
 import boto3
 
 s3 = boto3.client('s3')
+TARGET_BUCKET = os.environ['targetBucket']
 
 def lambda_handler(event, context):
 
     sourceBucket = "nyc-tlc"
-    targetBucket = "rmitula-nyc-taxi"
     prefix = "trip data/"
     index = event.get("iterator").get("index")
 
@@ -30,7 +30,7 @@ def lambda_handler(event, context):
         'Key': sourceFile
     }
 
-    s3.copy(copySource, targetBucket, targetFilePath)
+    s3.copy(copySource, TARGET_BUCKET, targetFilePath)
     print("Done")
 
     return {

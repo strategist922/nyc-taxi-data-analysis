@@ -46,6 +46,11 @@ resource "aws_lambda_function" "lambda-worker" {
   filename = "${data.archive_file.lambda-worker.output_path}"
   source_code_hash = "${data.archive_file.lambda-worker.output_base64sha256}"
   role = "${aws_iam_role.lambda-iam-role.arn}"
+  environment = {
+    variables = {
+      targetBucket = "${var.owner}-nyc-taxi"
+    }
+  }
   tags = {
     owner = "${var.owner}"
   }
@@ -60,6 +65,11 @@ resource "aws_lambda_function" "lambda-s3-structure-builder" {
   filename = "${data.archive_file.lambda-s3-structure-builder.output_path}"
   source_code_hash = "${data.archive_file.lambda-s3-structure-builder.output_base64sha256}"
   role = "${aws_iam_role.lambda-iam-role.arn}"
+  environment = {
+    variables = {
+      targetBucket = "${var.owner}-nyc-taxi"
+    }
+  }
   tags = {
     owner = "${var.owner}"
   }
