@@ -20,4 +20,5 @@ Processed data are partitioned by company, year, month and stored in the folowin
 ├── glue-scripts
 ```
 
-Then data can be transformed to Parquet format and stored in parqued-data folder. Size for yellow taxi trip data: 39.6 GB)
+Then data from S3 are crawled and transformed to Parquet format using AWS Glue Python script (runs around 1 hour). 
+Processed data is stored on S3 in parquet-data folder (size for yellow taxi trip data: 39.6 GB)
