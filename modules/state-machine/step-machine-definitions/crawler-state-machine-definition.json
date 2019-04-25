@@ -1,0 +1,22 @@
+{
+  "StartAt": "ConvertToParquetJob",
+  "States": {
+    "ConvertToParquetJob": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "${convert-to-parquet-job-name}"
+      },
+      "Next": "RunCrawlerLambdaFunction"
+    },
+    "RunCrawlerLambdaFunction": {
+      "Type": "Task",
+      "Resource": "${run-crawler-lambda-function-arn}",
+      "Next": "Done"
+    },
+    "Done": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
