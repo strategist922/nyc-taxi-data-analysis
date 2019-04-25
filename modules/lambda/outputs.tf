@@ -9,3 +9,7 @@ output "lambda-iterator-arn" {
 output "lambda-s3-structure-builder-arn" {
   value = "${aws_lambda_function.lambda-s3-structure-builder.arn}"
 }
+
+output "lambda-run-crawler-arn" {
+  value = "${aws_lambda_function.lambda-run-crawler.arn}"
+}

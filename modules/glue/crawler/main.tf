@@ -36,20 +36,21 @@ data "template_file" "role-policy" {
 }
 
 resource "aws_iam_role" "glue-iam-role" {
-  name = "${var.owner}-nyc-taxi-data-glue-role"
+  name               = "${var.owner}-nyc-taxi-data-glue-role"
   assume_role_policy = "${data.template_file.role-policy.rendered}"
+
   tags = {
     owner = "${var.owner}"
   }
 }
 
 resource "aws_iam_role_policy_attachment" "iam-service-role" {
-  role = "${aws_iam_role.glue-iam-role.id}"
+  role       = "${aws_iam_role.glue-iam-role.id}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
 }
 
 resource "aws_iam_role_policy" "iam-s3-access-policy" {
-  name = "${var.owner}-nyc-taxi-data-glue-s3-role-policy"
-  role = "${aws_iam_role.glue-iam-role.id}"
+  name   = "${var.owner}-nyc-taxi-data-glue-s3-role-policy"
+  role   = "${aws_iam_role.glue-iam-role.id}"
   policy = "${data.template_file.s3-access-policy.rendered}"
 }

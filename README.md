@@ -24,7 +24,7 @@ Then data from S3 are crawled and transformed to Parquet format using AWS Glue P
 Processed data is stored on S3 in parquet-data folder (size for yellow taxi trip data: 39.6 GB)
 
 # How to use?
-Run terraform apply specifying owner prefix that will be added before all generated aws rescources
+Run terraform apply specifying owner prefix that will be added before all generated aws resources
 ```
 $ terraform apply -var owner=nickname
 ```
