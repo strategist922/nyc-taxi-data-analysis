@@ -6,7 +6,7 @@ s3 = boto3.client('s3')
 sourceBucket = "nyc-tlc"
 TARGET_BUCKET = os.environ['targetBucket']
 
-companies = ['fhv', 'green', 'yellow']
+companies = ['yellow']
 years = range(2009, 2019)
 months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 

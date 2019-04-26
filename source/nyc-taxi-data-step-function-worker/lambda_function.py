@@ -1,5 +1,6 @@
 import json
 import boto3
+import os
 
 s3 = boto3.client('s3')
 TARGET_BUCKET = os.environ['targetBucket']
@@ -7,7 +8,7 @@ TARGET_BUCKET = os.environ['targetBucket']
 def lambda_handler(event, context):
 
     sourceBucket = "nyc-tlc"
-    prefix = "trip data/"
+    prefix = "trip data/yellow"
     index = event.get("iterator").get("index")
 
     objects = s3.list_objects(Bucket=sourceBucket, Prefix=prefix)['Contents']
