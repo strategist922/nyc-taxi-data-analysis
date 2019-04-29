@@ -8,7 +8,7 @@ This analysis is focused on `yellow` taxi data, but can be easily improved to pr
 Initial raw data size is 225.3 GB of CSV format files containing 957 667 710 rows of data.
 
 ---
-#####Yellow Taxi: Yellow Medallion Taxicabs
+##### Yellow Taxi: Yellow Medallion Taxicabs
 These are the famous NYC yellow taxis that provide transportation exclusively through street-hails. 
 The number of taxicabs is limited by a finite number of medallions issued by the TLC. 
 You access this mode of transportation by standing in the street and hailing an available 
