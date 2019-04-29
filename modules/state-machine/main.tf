@@ -19,6 +19,10 @@ data "template_file" "run-crawler-definition" {
 
 data "template_file" "state-machine-role-policy" {
   template = "${file("modules/state-machine/state-machine-role-policy.json")}"
+
+  vars {
+    region = "${var.region}"
+  }
 }
 
 data "template_file" "lambda-invoke-policy" {

@@ -16,6 +16,7 @@ module "state-machine" {
   lambda-s3-structure-builder-arn = "${module.lambda.lambda-s3-structure-builder-arn}"
   run-crawler-lambda-function-arn = "${module.lambda.lambda-run-crawler-arn}"
   convert-to-parquet-job-name     = "${module.glue.convert-to-parquet-job-name}"
+  region                          = "${var.region}"
 }
 
 module "glue" {

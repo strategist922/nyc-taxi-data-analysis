@@ -3,37 +3,27 @@
 This repository contains AWS architecture made with Terraform and Python scripts to 
 analyse [The New York City Taxi and Limousine Commission dataset](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
 
+This analysis is focused on `yellow` taxi data, but can be easily improved to process `green` and `fhv` data too.
+
+Initial raw data size is 225.3 GB of CSV format files containing 957 667 710 rows of data.
+
+---
+#####Yellow Taxi: Yellow Medallion Taxicabs
+These are the famous NYC yellow taxis that provide transportation exclusively through street-hails. 
+The number of taxicabs is limited by a finite number of medallions issued by the TLC. 
+You access this mode of transportation by standing in the street and hailing an available 
+taxi with your hand. The pickups are not pre-arranged.
+
 ## Build infrastructure
-Run Terraform to build AWS infrastructure specifying owner prefix that will be added before all generated aws resources and region.
+First and foremost create S3 bucket with your own prefix. For example using AWS CLI: 
+```
+aws s3api create-bucket --bucket your-name-nyc-taxi --region eu-central-1
+```
+
+Run Terraform to build AWS infrastructure with the same prefix an region as created bucket. 
+This prefix will be added before all generated aws resources and region.
+
 ```
 $ terraform init
-$ terraform apply -var owner=nickname -var region=eu-central-1
+$ terraform apply -var owner=your-name -var region=eu-central-1
 ```
-
-Terraform generates 32 AWS resources.
-
-
-## Usage
-In the first step, we can import [dataset](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page) to S3 (267 GB) into `data` folder. 
-We can do this by running `nyc-taxi-import-data` state machine, that will generate
-bucket structure, partition our data by company, year, month and import all csv files one by one using Lambda functions.
-
-### S3 file structure
-```
-├── data
-│  ├── fhv
-│  ├── green
-│  └── yellow
-│     ├── 2018
-│     ├── ...
-│        ├── 01
-│           └── yellow.csv
-│        ├── ...
-├── parquet-data
-├── glue-scripts
-```
-
-Next step is crawling our data (yellow taxi dataset ~39.6 GB), and transforming them to Parquet format. 
-To achieve that we can simply run Glue Crawler `nyc-taxi-data-crawler`. 
-Succeeded crawler will automatically trigger next steps of transformation (using CloudWatch, Step Functions, Glue Job, Lambda and Glue Crawler).
-As a result our data will be stored on S3 in `parquet-data` folder.

@@ -21,3 +21,7 @@ variable "convert-to-parquet-job-name" {
 variable "run-crawler-lambda-function-arn" {
   type = "string"
 }
+
+variable "region" {
+  type = "string"
+}

@@ -5,7 +5,7 @@
       "Action": "sts:AssumeRole",
       "Principal": {
         "Service": [
-          "states.eu-central-1.amazonaws.com",
+          "states.${region}.amazonaws.com",
           "events.amazonaws.com"
         ]
       },
