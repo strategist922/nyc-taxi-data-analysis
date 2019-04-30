@@ -20,8 +20,8 @@ First and foremost create S3 bucket with your own prefix. For example using AWS 
 aws s3api create-bucket --bucket your-name-nyc-taxi --region eu-central-1
 ```
 
-Run Terraform to build AWS infrastructure with the same prefix an region as created bucket. 
-This prefix will be added before all generated aws resources and region.
+Run Terraform to build AWS infrastructure with the same prefix and region as created bucket. 
+This prefix will be added before all generated aws resources.
 
 ```
 $ terraform init
