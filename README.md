@@ -1,4 +1,4 @@
-# nyc-taxi-data-analysis
+# :taxi: nyc-taxi-data-analysis
 
 This repository contains AWS architecture made with Terraform and Python scripts to 
 analyse [The New York City Taxi and Limousine Commission dataset](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
