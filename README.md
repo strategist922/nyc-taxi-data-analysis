@@ -8,7 +8,7 @@ This analysis is focused on `yellow` taxi data, but can be easily improved to pr
 Initial raw data size is 225.3 GB of CSV format files containing 957 667 710 rows of data.
 
 ---
-##### Yellow Taxi: Yellow Medallion Taxicabs
+## About: Yellow Medallion Taxicabs
 These are the famous NYC yellow taxis that provide transportation exclusively through street-hails. 
 The number of taxicabs is limited by a finite number of medallions issued by the TLC. 
 You access this mode of transportation by standing in the street and hailing an available 
@@ -27,3 +27,23 @@ This prefix will be added before all generated aws resources.
 $ terraform init
 $ terraform apply -var owner=your-name -var region=eu-central-1
 ```
+
+## AWS QuickSight sample visualizations
+
+### Most popular taxi pick-up places
+![QuickSight visualization](/quicksight/2.png)
+
+### Number of taxi trips by year (dataset size)
+![QuickSight visualization](/quicksight/1.png)
+
+### Average trip distance by year (in miles)
+![QuickSight visualization](/quicksight/3.png)
+
+### Busiest days of the week (records count)
+![QuickSight visualization](/quicksight/4.png)
+
+### Vendor impact (records count)
+![QuickSight visualization](/quicksight/5.png)
+
+### Busiest months of the year
+![QuickSight visualization](/quicksight/6.png)
